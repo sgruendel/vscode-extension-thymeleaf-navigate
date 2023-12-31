@@ -1,0 +1,49 @@
+{
+    "name": "vscode-extension-thymeleaf-navigate",
+    "description": "VS Code Extension to navigate Thymeleaf 3 fragments",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onLanguage:html"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {},
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "vscode-test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sgruendel/vscode-extension-thymeleaf-navigate.git"
+    },
+    "keywords": [
+        "vscode",
+        "thymeleaf"
+    ],
+    "author": "Stefan Gründel",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues"
+    },
+    "homepage": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate#readme",
+    "devDependencies": {
+        "@types/vscode": "^1.85.0",
+        "@types/mocha": "^10.0.6",
+        "@types/node": "20.x",
+        "@typescript-eslint/eslint-plugin": "^6.15.0",
+        "@typescript-eslint/parser": "^6.15.0",
+        "eslint": "^8.56.0",
+        "typescript": "^5.3.3",
+        "@vscode/test-cli": "^0.0.4",
+        "@vscode/test-electron": "^2.3.8"
+    }
+}
