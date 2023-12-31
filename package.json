@@ -3,7 +3,7 @@
     "displayName": "Thymeleaf Navigation",
     "description": "Navigate Thymeleaf 3 fragments",
     "icon": "assets/icon/icon.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "engines": {
         "vscode": "^1.85.0"
     },
