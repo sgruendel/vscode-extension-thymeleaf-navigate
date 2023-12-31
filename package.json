@@ -1,7 +1,7 @@
 {
-    "name": "thymeleaf-navigate",
-    "displayName": "Navigate Thymeleaf 3 fragments",
-    "description": "VS Code Extension to navigate Thymeleaf 3 fragments",
+    "name": "vscode-extension-thymeleaf-navigate",
+    "displayName": "Thymeleaf Navigation",
+    "description": "Navigate Thymeleaf 3 fragments",
     "icon": "assets/icon/icon.png",
     "version": "1.0.1",
     "engines": {
