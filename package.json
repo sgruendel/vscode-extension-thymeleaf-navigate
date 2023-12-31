@@ -30,6 +30,7 @@
         "thymeleaf"
     ],
     "author": "Stefan Gründel",
+    "publisher": "sgruendel",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues"
