@@ -9,6 +9,8 @@ Fragment expressions referencing those definitions like
 `<div th:replace="~{fragments/skeletons :: card-skeleton}" />` are then recognized and made navigable via
 `Ctrl+Click`.
 
+![thymeleaf-navigate demo](assets/images/demo.gif)
+
 ## Requirements
 
 Thymeleaf syntax before version 3 is not supported. Fragments must be located below src/main/resources/templates to be found.
