@@ -1,12 +1,19 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import ThymeleafDocumentLink from './thdocumentlink';
+import { getThymeleafFragmentsPath, getThymeleafLanguage } from './extension';
+
+class ThymeleafDocumentLink extends vscode.DocumentLink {
+    templatePath: string;
+    fragmentName: string;
+
+    constructor(range: vscode.Range, templatePath: string, fragmentName: string) {
+        super(range);
+        this.templatePath = templatePath;
+        this.fragmentName = fragmentName;
+    }
+}
 
 export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvider {
-
-    // currently we're only supporting Thymeleaf in HTML
-    static language = 'html';
-
     // RegExp defining a Thymeleaf fragment e.g. <div th:fragment="card-skeleton">
     static thymeleafFragmentRegex: RegExp = /th:fragment *= *" *([\w-]+) *(\(.*\))? *"/g;
 
@@ -23,11 +30,11 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
     private _changedDocuments = new Set<string>();
 
     constructor() {
-        console.info('constructor()');
+        console.info('ThymeleafFragmentLinkProvider constructor()');
     }
 
     dispose() {
-        console.info('disposing');
+        console.info('disposing ThymeleafFragmentLinkProvider');
         this._thLinks.clear();
         this._thUris.clear();
         this._changedDocuments.clear();
@@ -37,7 +44,10 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
         document: vscode.TextDocument,
         token: vscode.CancellationToken,
     ): vscode.DocumentLink[] | undefined {
-        if (this._changedDocuments.has(document.uri.fsPath)) {
+        if (document.languageId !== getThymeleafLanguage()) {
+            console.log('unsupported language ' + document.languageId);
+            return [];
+        } else if (this._changedDocuments.has(document.uri.fsPath)) {
             console.log('changed since last time, reparsing: ' + document.uri.fsPath);
             // no need to clear _thLinks, will be overwritten below
             this.clearThUrisFor(document.uri.fsPath);
@@ -132,7 +142,7 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                                     (vscode.workspace.workspaceFolders &&
                                         vscode.workspace.workspaceFolders[0].uri.fsPath) ||
                                         '',
-                                    'src/main/resources/templates',
+                                    getThymeleafFragmentsPath(),
                                     templateName,
                                 );
                                 const thUri = this._thUris.get(templatePath + '::' + fragmentName);
@@ -171,7 +181,7 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
     }
 
     handleDocumentChange(event: vscode.TextDocumentChangeEvent) {
-        if (getDocumentExt(event.document) === '.' + ThymeleafFragmentLinkProvider.language) {
+        if (event.document.languageId === getThymeleafLanguage()) {
             console.log('marking document as changed: ' + event.document.uri.fsPath);
             this._changedDocuments.add(event.document.uri.fsPath);
         }

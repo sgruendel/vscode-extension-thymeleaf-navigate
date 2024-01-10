@@ -1,10 +1,10 @@
 # thymeleaf-navigate README
 
-A VS Code extension to navigate Thymeleaf 3 fragments. Currently, only HTML files with .html extension are supported.
+A VS Code extension to navigate Thymeleaf 3 fragments in text files like HTML or XML.
 
 ## Features
 
-Fragment definitions like `<div th:fragment="card-skeleton">` are recognized in HTML files.
+Fragment definitions like `<div th:fragment="card-skeleton">` are recognized in text files.
 Fragment expressions referencing those definitions like
 `<div th:replace="~{fragments/skeletons :: card-skeleton}" />` are then recognized and made navigable via
 `Ctrl+Click`.
@@ -13,11 +13,12 @@ Fragment expressions referencing those definitions like
 
 ## Requirements
 
-Thymeleaf syntax before version 3 is not supported. Fragments must be located below src/main/resources/templates to be found.
+Thymeleaf syntax before version 3 is not supported.
 
 ## Extension Settings
 
-No settings supported currently, future versions will allow settings for language/file extension and fragment path.
+- `thymeleaf-navigate.language`: Language mode for Thymeleaf files, e.g. "html" or "xml"; defaults to "html".
+- `thymeleaf-navigate.fragmentsPath`: Path to search for Thymeleaf fragments, defaults to "src/main/resources/templates".
 
 ## Known Issues
 
@@ -29,6 +30,10 @@ Dynamic fragment selectors like `<div th:insert="~{footer :: #{footer.admin}}" /
 
 ## Release Notes
 
-### 1.0.0
+### 1.1.0
+
+Add settings for language and fragments path.
+
+### 1.0.4
 
 Initial release

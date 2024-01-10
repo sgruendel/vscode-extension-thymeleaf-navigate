@@ -3,7 +3,7 @@
     "displayName": "Thymeleaf Navigation",
     "description": "Navigate Thymeleaf 3 fragments",
     "icon": "assets/icon/icon.png",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "engines": {
         "vscode": "^1.85.0"
     },
@@ -11,10 +11,26 @@
         "Other"
     ],
     "activationEvents": [
-        "onLanguage:html"
+        "onStartupFinished"
     ],
     "main": "./out/extension.js",
-    "contributes": {},
+    "contributes": {
+        "configuration": {
+            "title": "Thymeleaf Navigation",
+            "properties": {
+                "thymeleaf-navigate.language": {
+                    "type": "string",
+                    "default": "html",
+                    "description": "Language mode for Thymeleaf files"
+                },
+                "thymeleaf-navigate.fragmentsPath": {
+                    "type": "string",
+                    "default": "src/main/resources/templates",
+                    "description": "Path to search for Thymeleaf fragments"
+                }
+            }
+        }
+    },
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
