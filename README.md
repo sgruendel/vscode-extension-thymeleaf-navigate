@@ -30,6 +30,11 @@ Dynamic fragment selectors like `<div th:insert="~{footer :: #{footer.admin}}" /
 
 ## Release Notes
 
+### 1.2.0
+
+Add tooltips to links.
+Separate links to file defining fragment and fragment itself.
+
 ### 1.1.0
 
 Add settings for language and fragments path.

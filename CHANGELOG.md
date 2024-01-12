@@ -4,7 +4,14 @@ All notable changes to the "thymeleaf-navigate" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [1.1.1] - 2024-01-010
+## [1.2.0] - 2024-01-12
+
+### Added
+
+- tooltips for links
+- separate links to file defining fragment and fragment itself
+
+## [1.1.1] - 2024-01-10
 
 ### Added
 
