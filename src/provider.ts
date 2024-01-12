@@ -63,6 +63,8 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
             }
         }
 
+        const thFragmentsPath = getThymeleafFragmentsPath();
+        const parsedPath = path.parse(document.uri.fsPath);
         let links = [];
         if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0]) {
             // first find all th:fragments created in this document
@@ -75,18 +77,14 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                         if (match.index !== undefined) {
                             const fragmentName = match[1];
                             console.log(
-                                document.uri.fsPath.substring(document.uri.fsPath.lastIndexOf('/') + 1) +
-                                    ':' +
-                                    i +
-                                    ': match fragment definition "' +
-                                    fragmentName +
-                                    '"',
+                                parsedPath.base + ':' + i + ': match fragment definition "' + fragmentName + '"',
                             );
 
                             // set line number as string as fragment, so VSCode will directly go to that line
                             const uri = document.uri.with({
                                 fragment: (line.lineNumber + 1).toString(),
                             });
+
                             this._thUris.set(document.uri.fsPath + '::' + fragmentName, uri);
                         }
                     }
@@ -94,9 +92,6 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                     console.error('error in ' + document.uri + ':' + i, err);
                 }
             }
-
-            // get the extension of the current file, assumes thymeleaf fragments referenced will have the same extension
-            const ext = getDocumentExt(document);
 
             // now create links for all Thymeleaf references in this document
             for (let i = 0; i < document.lineCount; i++) {
@@ -108,10 +103,10 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                         if (match.index !== undefined) {
                             // match[2] is undefined e.g. "~{::fragmentname}" => normalize templatename to "this"
                             // match[2] is defined e.g. "~{dir/templatename::fragmentname}" => normalize templatename to templatename.ext
-                            const templateName = match[2] ? match[2] + ext : 'this';
+                            const templateName = match[2] ? match[2] + parsedPath.ext : 'this';
                             const fragmentName = match[3];
                             console.log(
-                                document.uri.fsPath.substring(document.uri.fsPath.lastIndexOf('/') + 1) +
+                                parsedPath.base +
                                     ':' +
                                     i +
                                     ': match fragment link "' +
@@ -120,38 +115,57 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                                     templateName,
                             );
 
-                            const range = new vscode.Range(
+                            const fragmentNameIndex = getFragmentNameIndex(match, fragmentName);
+                            const fragmentNameRange = new vscode.Range(
                                 i,
-                                match.index + match[0].indexOf('{') + 1,
+                                fragmentNameIndex,
                                 i,
-                                match.index + match[0].indexOf('}'),
+                                fragmentNameIndex + fragmentName.length,
                             );
 
                             if (templateName === 'this') {
-                                // referencing current document, this should exist
+                                // referencing current file, this should exist
                                 const thUri = this._thUris.get(document.uri.fsPath + '::' + fragmentName);
                                 if (thUri) {
-                                    links.push(new vscode.DocumentLink(range, thUri));
+                                    const link = new vscode.DocumentLink(fragmentNameRange, thUri);
+                                    link.tooltip = getThFragmentTooltip(fragmentName, parsedPath.base);
+                                    links.push(link);
                                 } else {
                                     // could be a typo or is not defined yet
                                     console.error('local fragment not found: "' + fragmentName + '"');
                                 }
                             } else {
-                                // referencing other document, this could already exist or not
+                                // referencing other file, this could already exist or not
                                 const templatePath = path.join(
                                     (vscode.workspace.workspaceFolders &&
                                         vscode.workspace.workspaceFolders[0].uri.fsPath) ||
                                         '',
-                                    getThymeleafFragmentsPath(),
+                                    thFragmentsPath,
                                     templateName,
                                 );
+
+                                // first create a link to the file defining the fragment
+                                const templateNameIndex = getTemplateNameIndex(match, match[2]);
+                                const templateNameRange = new vscode.Range(
+                                    i,
+                                    templateNameIndex,
+                                    i,
+                                    templateNameIndex + match[2].length,
+                                );
+                                let link = new vscode.DocumentLink(templateNameRange, vscode.Uri.file(templatePath));
+                                link.tooltip = templateName;
+                                links.push(link);
+
+                                // then create a link to the the fragment within the file
                                 const thUri = this._thUris.get(templatePath + '::' + fragmentName);
                                 if (thUri) {
-                                    links.push(new vscode.DocumentLink(range, thUri));
+                                    link = new vscode.DocumentLink(fragmentNameRange, thUri);
                                 } else {
-                                    // create link that will be resolved in resolveDocumentLink()
-                                    links.push(new ThymeleafDocumentLink(range, templatePath, fragmentName));
+                                    // we have not parsed that file yet, create link that will be resolved in resolveDocumentLink()
+                                    link = new ThymeleafDocumentLink(fragmentNameRange, templatePath, fragmentName);
                                 }
+                                link.tooltip = getThFragmentTooltip(fragmentName, path.parse(templateName).base);
+                                links.push(link);
                             }
                         }
                     }
@@ -171,6 +185,7 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
             const thUri = this._thUris.get(thLink.templatePath + '::' + thLink.fragmentName);
             if (thUri) {
                 // we can fully resolve it now
+                console.log('now resolving: ' + thLink.templatePath);
                 return new vscode.DocumentLink(thLink.range, thUri);
             }
             console.log('not resolved yet: ' + thLink.templatePath + '::' + thLink.fragmentName);
@@ -201,7 +216,14 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
     }
 }
 
-function getDocumentExt(document: vscode.TextDocument): string {
-    const extIndex = document.uri.fsPath.lastIndexOf('.');
-    return document.uri.fsPath.substring(extIndex);
+function getThFragmentTooltip(fragmentName: string, fragmentFile: string): string {
+    return 'Thymeleaf Fragment "' + fragmentName + '" [' + fragmentFile + ']';
+}
+
+function getTemplateNameIndex(match: RegExpExecArray, templateName: string): number {
+    return match.index + match[0].indexOf(templateName, match[0].indexOf('{'));
+}
+
+function getFragmentNameIndex(match: RegExpExecArray, fragmentName: string): number {
+    return match.index + match[0].indexOf(fragmentName, match[0].indexOf('::'));
 }
