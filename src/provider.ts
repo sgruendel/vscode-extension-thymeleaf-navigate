@@ -220,10 +220,18 @@ function getThFragmentTooltip(fragmentName: string, fragmentFile: string): strin
     return 'Thymeleaf Fragment "' + fragmentName + '" [' + fragmentFile + ']';
 }
 
-function getTemplateNameIndex(match: RegExpExecArray, templateName: string): number {
-    return match.index + match[0].indexOf(templateName, match[0].indexOf('{'));
+function getTemplateNameIndex(match: RegExpMatchArray, templateName: string): number {
+    let index = 0;
+    if (match.index) {
+        index = match.index;
+    }
+    return index + match[0].indexOf(templateName, match[0].indexOf('{'));
 }
 
-function getFragmentNameIndex(match: RegExpExecArray, fragmentName: string): number {
-    return match.index + match[0].indexOf(fragmentName, match[0].indexOf('::'));
+function getFragmentNameIndex(match: RegExpMatchArray, fragmentName: string): number {
+    let index = 0;
+    if (match.index) {
+        index = match.index;
+    }
+    return index + match[0].indexOf(fragmentName, match[0].indexOf('::'));
 }
