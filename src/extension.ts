@@ -17,7 +17,7 @@ export function getThymeleafFragmentsPath(): string {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('ThymeleafFragmentLinkProvider activate() init');
+    console.log('ThymeleafFragmentLinkProvider activate()');
     registerLinkProvider(context);
 
     context.subscriptions.push(
@@ -30,32 +30,24 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }),
     );
-
-    console.log('ThymeleafFragmentLinkProvider activate() done');
 }
 
 export function deactivate() {
     console.log('ThymeleafFragmentLinkProvider deactivate()');
-    if (thFragmentLinkProvider) {
-        thFragmentLinkProvider.dispose();
-    }
+    disposeSubscriptionAndProvider();
+}
+
+function disposeSubscriptionAndProvider() {
     if (thFragmentLinkProviderSubscription) {
         thFragmentLinkProviderSubscription.dispose();
+    }
+    if (thFragmentLinkProvider) {
+        thFragmentLinkProvider.dispose();
     }
 }
 
 function registerLinkProvider(context: vscode.ExtensionContext) {
-    console.log('registerLinkProvider(), current subscription:', thFragmentLinkProviderSubscription);
-    if (thFragmentLinkProvider) {
-        console.log('disposing provider');
-        // Dispose of the current provider before registering a new one
-        thFragmentLinkProvider.dispose();
-    }
-    if (thFragmentLinkProviderSubscription) {
-        console.log('disposing subscription');
-        // Dispose of the current provider before registering a new one
-        thFragmentLinkProviderSubscription.dispose();
-    }
+    disposeSubscriptionAndProvider();
 
     thFragmentLinkProvider = new ThymeleafFragmentLinkProvider();
     thFragmentLinkProviderSubscription = vscode.languages.registerDocumentLinkProvider(
