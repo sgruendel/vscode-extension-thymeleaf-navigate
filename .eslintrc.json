@@ -2,29 +2,36 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 2023,
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint"
-    ],
+    "plugins": ["@typescript-eslint"],
+    "extends": "strongloop",
     "rules": {
         "@typescript-eslint/naming-convention": [
             "warn",
             {
                 "selector": "import",
-                "format": [ "camelCase", "PascalCase" ]
+                "format": ["camelCase", "PascalCase"]
             }
         ],
         "@typescript-eslint/semi": "warn",
         "curly": "warn",
         "eqeqeq": "warn",
+        "indent": ["warn", 4],
+        "max-len": [
+            "warn",
+            120,
+            4,
+            {
+                "ignoreComments": true,
+                "ignoreUrls": true,
+                "ignoreStrings": true,
+                "ignorePattern": "^\\s*var\\s.+=\\s*(require\\s*\\()|(/)"
+            }
+        ],
         "no-throw-literal": "warn",
         "semi": "off"
     },
-    "ignorePatterns": [
-        "out",
-        "dist",
-        "**/*.d.ts"
-    ]
+    "ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }
