@@ -3,7 +3,7 @@ import ThymeleafFragmentLinkProvider from './provider';
 
 const TH_NAVIGATE = 'thymeleaf-navigate';
 
-let thFragmentLinkProvider: ThymeleafFragmentLinkProvider | null = null;
+export let thFragmentLinkProvider: ThymeleafFragmentLinkProvider | null = null;
 let thFragmentLinkProviderSubscription: vscode.Disposable | null = null;
 
 export function getThymeleafLanguage(): string {

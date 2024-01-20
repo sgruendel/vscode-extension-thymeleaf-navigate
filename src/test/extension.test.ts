@@ -27,12 +27,12 @@ suite('Extension Test Suite', () => {
     });
 
     test('provider x()', () => {
-        const thFragmentLinkProvider = new ThymeleafFragmentLinkProvider();
+        const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
         vscode.workspace.findFiles('**/*').then((files) => {
             files.forEach((file) => {
                 console.log('file.fsPath:' + file.fsPath);
             });
         });
-        thFragmentLinkProvider.dispose();
+        console.log(thFragmentLinkProvider);
     });
 });

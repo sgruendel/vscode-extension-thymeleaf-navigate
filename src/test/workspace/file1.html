@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <li
+            th:replace="~{components/outcome-bullet :: outcome(
+            heading = 'Lorem Ipsum',
+            text = ${descriptionText}
+        )}"
+        ></li>
+    </body>
+</html>
