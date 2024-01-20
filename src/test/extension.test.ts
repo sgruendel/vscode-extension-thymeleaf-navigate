@@ -39,7 +39,6 @@ suite('Extension Test Suite', () => {
         assert.equal(files.length, 1);
         console.log('file.fsPath:' + files[0].fsPath);
         let doc = await vscode.workspace.openTextDocument(files[0]);
-        console.log('doc:' + doc.languageId);
         const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, ct);
         console.log('thLinks:', thLinks);
 

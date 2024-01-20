@@ -2,6 +2,15 @@
 <html>
     <head></head>
     <body>
+        <!-- fragment definition -->
+        <div th:fragment="local"></div>
+
+        <!-- th:replace on one line -->
+        <div th:replace="~{:: local}"></div>
+
+        <!-- th:replace on one line -->
+        <div th:replace="~{this :: local}"></div>
+
         <!-- th:replace on one line -->
         <div th:replace="~{fragments/skeletons :: frag1}"></div>
 
