@@ -5,20 +5,27 @@
         <!-- fragment definition -->
         <div th:fragment="local"></div>
 
-        <!-- th:replace on one line -->
+        <!-- th:replace/insert using nothing -->
         <div th:replace="~{:: local}"></div>
+        <div th:insert="~{:: local}"></div>
 
-        <!-- th:replace on one line -->
+        <!-- th:replace/insert using this -->
         <div th:replace="~{this :: local}"></div>
+        <div th:insert="~{this :: local}"></div>
 
-        <!-- th:replace on one line -->
-        <div th:replace="~{fragments/skeletons :: frag1}"></div>
+        <!-- th:replace/insert on one line -->
+        <div th:replace="~{fragments/file :: extern}"></div>
+        <div th:insert="~{fragments/file :: extern}"></div>
 
-        <!-- th:replace on one line -->
-        <div th:insert="~{fragments/skeletons :: frag2}"></div>
-
+        <!-- th:replace/insert multi line -->
         <li
             th:replace="~{components/outcome-bullet :: outcome(
+            heading = 'Lorem Ipsum',
+            text = ${descriptionText}
+        )}"
+        ></li>
+        <li
+            th:insert="~{components/outcome-bullet :: outcome(
             heading = 'Lorem Ipsum',
             text = ${descriptionText}
         )}"
