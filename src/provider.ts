@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { getThymeleafFragmentsPath, getThymeleafLanguage } from './extension';
 
-class ThymeleafDocumentLink extends vscode.DocumentLink {
+export class ThymeleafDocumentLink extends vscode.DocumentLink {
     templatePath: string;
     fragmentName: string;
 
@@ -13,7 +13,7 @@ class ThymeleafDocumentLink extends vscode.DocumentLink {
     }
 }
 
-export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvider {
+export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvider {
     // RegExp defining a Thymeleaf fragment e.g. <div th:fragment="card-skeleton">
     static thymeleafFragmentRegex: RegExp = /th:fragment *= *" *([\w-]+) *(\(.*\))? *"/g;
 
@@ -43,7 +43,7 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
     provideDocumentLinks(
         document: vscode.TextDocument,
         token: vscode.CancellationToken,
-    ): vscode.DocumentLink[] | undefined {
+    ): (vscode.DocumentLink | ThymeleafDocumentLink)[] | undefined {
         if (document.languageId !== getThymeleafLanguage()) {
             console.log('unsupported language ' + document.languageId);
             return [];

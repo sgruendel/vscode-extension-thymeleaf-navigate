@@ -5,6 +5,7 @@ import { after, suite, test } from 'mocha';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as thExt from '../extension';
+import { ThymeleafDocumentLink } from '../provider';
 
 class MockCancellationToken implements vscode.CancellationToken {
     isCancellationRequested: boolean = false;
@@ -56,11 +57,11 @@ suite('Extension Test Suite', () => {
             assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html');
             assert.equal(thLinks[3].target?.fragment, '6');
 
-            assert.equal(getFileName(thLinks[4].target?.fsPath), 'file1.html');
-            assert.equal(thLinks[4].target?.fragment, '6');
+            assert.equal(getFileName(thLinks[4].target?.fsPath), 'file.html');
+            assert.equal(thLinks[4].target?.fragment, undefined);
 
             assert.equal(getFileName(thLinks[5].target?.fsPath), 'file.html');
-            assert.equal(thLinks[5].target?.fragment, undefined);
+            assert.equal((thLinks[5] as ThymeleafDocumentLink).fragmentName, 'extern');
         }
 
         console.log('thflp', thFragmentLinkProvider);

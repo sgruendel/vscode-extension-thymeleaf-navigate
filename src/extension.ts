@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import ThymeleafFragmentLinkProvider from './provider';
+import { ThymeleafFragmentLinkProvider } from './provider';
 
 const TH_NAVIGATE = 'thymeleaf-navigate';
 
