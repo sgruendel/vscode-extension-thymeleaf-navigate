@@ -6,6 +6,12 @@ import { after, suite, test } from 'mocha';
 import * as vscode from 'vscode';
 import * as thExt from '../extension';
 
+class MockCancellationToken implements vscode.CancellationToken {
+    isCancellationRequested: boolean = false;
+
+    onCancellationRequested: vscode.Event<any> = new vscode.EventEmitter<any>().event;
+}
+
 suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
@@ -27,15 +33,17 @@ suite('Extension Test Suite', () => {
 
     test('provider x()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
+        const ct = new MockCancellationToken();
         const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
         console.log('fileStat', fileStat);
         let docs: vscode.TextEditor[] = [];
-        await vscode.workspace.findFiles('**/*.html').then((files) => {
+        await vscode.workspace.findFiles('**/file1.html').then((files) => {
             files.forEach(async (file) => {
                 console.log('file.fsPath:' + file.fsPath);
                 let doc = await vscode.workspace.openTextDocument(file);
                 console.log('doc:' + doc.languageId);
-                docs.push(await vscode.window.showTextDocument(doc));
+                const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, ct);
+                console.log('thLinks:', thLinks);
             });
         });
         console.log('docs', docs);
