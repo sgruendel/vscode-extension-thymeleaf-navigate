@@ -5,7 +5,7 @@ export default defineConfig([
         label: 'unitTests',
         files: 'out/test/**/*.test.js',
         version: 'insiders',
-        workspaceFolder: '.',
+        workspaceFolder: 'src/test/workspace',
         mocha: {
             ui: 'tdd',
             timeout: 20000,
