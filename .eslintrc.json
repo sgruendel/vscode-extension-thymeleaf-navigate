@@ -31,7 +31,8 @@
             }
         ],
         "no-throw-literal": "warn",
-        "semi": "off"
+        "semi": "off",
+        "space-before-function-paren": 0
     },
     "ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }
