@@ -31,7 +31,7 @@ suite('Extension Test Suite', () => {
         );
     });
 
-    test('provider x()', async () => {
+    test('provider provideDocumentLinks()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
         const ct = new MockCancellationToken();
 
@@ -41,7 +41,20 @@ suite('Extension Test Suite', () => {
         let doc = await vscode.workspace.openTextDocument(files[0]);
         const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, ct);
         console.log('thLinks:', thLinks);
+        if (thLinks) {
+            assert.notEqual(thLinks, undefined);
+
+            assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html');
+        }
 
         console.log('thflp', thFragmentLinkProvider);
     });
 });
+
+function getFileName(fsPath: string | undefined): string | undefined {
+    if (!fsPath) {
+        return fsPath;
+    }
+    const slash = fsPath.lastIndexOf('/');
+    return fsPath.substring(slash + 1);
+}
