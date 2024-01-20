@@ -29,11 +29,12 @@ suite('Extension Test Suite', () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
         const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
         console.log('fileStat', fileStat);
+        console.log('.', vscode.Uri.file('.').fsPath);
         vscode.workspace.findFiles('**/*').then((files) => {
             files.forEach((file) => {
                 console.log('file.fsPath:' + file.fsPath);
             });
         });
-        console.log(thFragmentLinkProvider);
+        console.log('thflp', thFragmentLinkProvider);
     });
 });
