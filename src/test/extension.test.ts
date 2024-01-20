@@ -30,7 +30,8 @@ suite('Extension Test Suite', () => {
         const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
         console.log('fileStat', fileStat);
         console.log('.', vscode.Uri.file('.').fsPath);
-        vscode.workspace.findFiles('**/*').then((files) => {
+        console.log('wsf', vscode.workspace.workspaceFile?.fsPath);
+        await vscode.workspace.findFiles('**/*').then((files) => {
             files.forEach((file) => {
                 console.log('file.fsPath:' + file.fsPath);
             });
