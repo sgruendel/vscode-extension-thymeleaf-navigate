@@ -45,6 +45,22 @@ suite('Extension Test Suite', () => {
             assert.notEqual(thLinks, undefined);
 
             assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[0].target?.fragment, '6');
+
+            assert.equal(getFileName(thLinks[1].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[1].target?.fragment, '6');
+
+            assert.equal(getFileName(thLinks[2].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[2].target?.fragment, '6');
+
+            assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[3].target?.fragment, '6');
+
+            assert.equal(getFileName(thLinks[4].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[4].target?.fragment, '6');
+
+            assert.equal(getFileName(thLinks[5].target?.fsPath), 'file.html');
+            assert.equal(thLinks[5].target?.fragment, undefined);
         }
 
         console.log('thflp', thFragmentLinkProvider);
