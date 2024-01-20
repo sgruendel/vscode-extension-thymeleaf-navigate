@@ -2,6 +2,12 @@
 <html>
     <head></head>
     <body>
+        <!-- th:replace on one line -->
+        <div th:replace="~{fragments/skeletons :: frag1}"></div>
+
+        <!-- th:replace on one line -->
+        <div th:insert="~{fragments/skeletons :: frag2}"></div>
+
         <li
             th:replace="~{components/outcome-bullet :: outcome(
             heading = 'Lorem Ipsum',
