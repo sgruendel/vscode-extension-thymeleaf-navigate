@@ -1,19 +1,38 @@
 import * as assert from 'assert';
-import { suite, test } from 'mocha';
+import { after, suite, test } from 'mocha';
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as thExt from '../extension';
+import ThymeleafFragmentLinkProvider from '../provider';
 
 suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
-    test('getThymeleafLanguage()', () => {
-        assert.strictEqual(thExt.getThymeleafLanguage(), 'html');
+    after(() => {
+        vscode.window.showInformationMessage('All tests done!');
     });
 
-    test('getThymeleafFragmentsPath()', () => {
-        assert.strictEqual(thExt.getThymeleafFragmentsPath(), 'src/main/resources/templates');
+    test('extension getThymeleafLanguage()', () => {
+        assert.strictEqual(thExt.getThymeleafLanguage(), 'html', 'should default to html');
+    });
+
+    test('extension getThymeleafFragmentsPath()', () => {
+        assert.strictEqual(
+            thExt.getThymeleafFragmentsPath(),
+            'src/main/resources/templates',
+            'should default to src/main/resources/templates',
+        );
+    });
+
+    test('provider x()', () => {
+        const thFragmentLinkProvider = new ThymeleafFragmentLinkProvider();
+        vscode.workspace.findFiles('**/*').then((files) => {
+            files.forEach((file) => {
+                console.log('file.fsPath:' + file.fsPath);
+            });
+        });
+        thFragmentLinkProvider.dispose();
     });
 });
