@@ -36,18 +36,15 @@ suite('Extension Test Suite', () => {
         const ct = new MockCancellationToken();
         const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
         console.log('fileStat', fileStat);
-        let docs: vscode.TextEditor[] = [];
-        await vscode.workspace.findFiles('**/file1.html').then((files) => {
-            files.forEach(async (file) => {
-                console.log('file.fsPath:' + file.fsPath);
-                let doc = await vscode.workspace.openTextDocument(file);
-                console.log('doc:' + doc.languageId);
-                const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, ct);
-                console.log('thLinks:', thLinks);
-            });
-        });
-        console.log('docs', docs);
-        console.log('await', await Promise.all(docs));
+
+        let files = await vscode.workspace.findFiles('**/file1.html');
+        assert.equal(files.length, 1);
+        console.log('file.fsPath:' + files[0].fsPath);
+        let doc = await vscode.workspace.openTextDocument(files[0]);
+        console.log('doc:' + doc.languageId);
+        const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, ct);
+        console.log('thLinks:', thLinks);
+
         console.log('thflp', thFragmentLinkProvider);
     });
 });
