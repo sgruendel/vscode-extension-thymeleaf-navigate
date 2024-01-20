@@ -27,7 +27,7 @@ suite('Extension Test Suite', () => {
 
     test('provider x()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
-        const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('./file1.html'));
+        const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
         console.log('fileStat', fileStat);
         await vscode.workspace.findFiles('**/*.html').then((files) => {
             files.forEach(async (file) => {
