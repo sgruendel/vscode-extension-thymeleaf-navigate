@@ -101,9 +101,9 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
                 try {
                     for (const match of matches) {
                         if (match.index !== undefined) {
-                            // match[2] is undefined e.g. "~{::fragmentname}" => normalize templatename to "this"
+                            // match[2] is undefined e.g. "~{::fragmentname}" or 'this' => normalize templatename to "this"
                             // match[2] is defined e.g. "~{dir/templatename::fragmentname}" => normalize templatename to templatename.ext
-                            const templateName = match[2] ? match[2] + parsedPath.ext : 'this';
+                            const templateName = match[2] && match[2] !== 'this' ? match[2] + parsedPath.ext : 'this';
                             const fragmentName = match[3];
                             console.log(
                                 parsedPath.base +
@@ -216,10 +216,29 @@ export default class ThymeleafFragmentLinkProvider implements vscode.DocumentLin
     }
 }
 
+/**
+ * The function returns a tooltip string for a Thymeleaf fragment, including the fragment name and
+ * file.
+ * @param {string} fragmentName - The `fragmentName` parameter is a string that represents the name of
+ * the Thymeleaf fragment.
+ * @param {string} fragmentFile - The `fragmentFile` parameter is a string that represents the file
+ * path or location of the Thymeleaf fragment.
+ * @returns a string that represents a tooltip for a Thymeleaf fragment. The tooltip includes the name
+ * of the fragment and the file it is located in.
+ */
 function getThFragmentTooltip(fragmentName: string, fragmentFile: string): string {
     return 'Thymeleaf Fragment "' + fragmentName + '" [' + fragmentFile + ']';
 }
 
+/**
+ * The function `getTemplateNameIndex` returns the index of a template name within a regular expression
+ * match.
+ * @param {RegExpMatchArray} match - A RegExpMatchArray, which is an array of strings that match the
+ * regular expression pattern.
+ * @param {string} templateName - The `templateName` parameter is a string that represents the name of
+ * a template.
+ * @returns the index of the template name within the matched string.
+ */
 function getTemplateNameIndex(match: RegExpMatchArray, templateName: string): number {
     let index = 0;
     if (match.index) {
@@ -228,6 +247,16 @@ function getTemplateNameIndex(match: RegExpMatchArray, templateName: string): nu
     return index + match[0].indexOf(templateName, match[0].indexOf('{'));
 }
 
+/**
+ * The function `getFragmentNameIndex` returns the index of a specific fragment name within a regular
+ * expression match.
+ * @param {RegExpMatchArray} match - A RegExpMatchArray object that represents the result of a regular
+ * expression match. It contains information about the matched string, captured groups, and the index
+ * of the match within the original string.
+ * @param {string} fragmentName - The `fragmentName` parameter is a string that represents the name of
+ * a fragment.
+ * @returns the index of the specified fragment name within the matched string.
+ */
 function getFragmentNameIndex(match: RegExpMatchArray, fragmentName: string): number {
     let index = 0;
     if (match.index) {

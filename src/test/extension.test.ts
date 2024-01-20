@@ -34,8 +34,6 @@ suite('Extension Test Suite', () => {
     test('provider x()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
         const ct = new MockCancellationToken();
-        const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
-        console.log('fileStat', fileStat);
 
         let files = await vscode.workspace.findFiles('**/file1.html');
         assert.equal(files.length, 1);
