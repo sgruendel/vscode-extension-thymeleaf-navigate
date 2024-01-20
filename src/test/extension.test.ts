@@ -27,14 +27,17 @@ suite('Extension Test Suite', () => {
 
     test('provider x()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
-        const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('.'));
+        const fileStat = await vscode.workspace.fs.stat(vscode.Uri.file('./file1.html'));
         console.log('fileStat', fileStat);
-        console.log('wsf:', vscode.workspace.workspaceFile);
-        await vscode.workspace.findFiles('**/*').then((files) => {
-            files.forEach((file) => {
+        await vscode.workspace.findFiles('**/*.html').then((files) => {
+            files.forEach(async (file) => {
                 console.log('file.fsPath:' + file.fsPath);
+                let doc = await vscode.workspace.openTextDocument(file);
+                console.log('doc:' + doc.languageId);
             });
         });
         console.log('thflp', thFragmentLinkProvider);
+        let doc = await vscode.workspace.openTextDocument(vscode.Uri.file('./file1.html'));
+        console.log('doc2:' + doc.languageId);
     });
 });
