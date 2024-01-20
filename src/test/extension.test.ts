@@ -5,7 +5,6 @@ import { after, suite, test } from 'mocha';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as thExt from '../extension';
-import ThymeleafFragmentLinkProvider from '../provider';
 
 suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
