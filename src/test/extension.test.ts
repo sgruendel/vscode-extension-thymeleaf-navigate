@@ -5,7 +5,7 @@ import { suite, test } from 'mocha';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 // import * as myExtension from '../../extension';
-import * as thExt from '../../extension';
+import * as thExt from '../../src/extension';
 
 suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
