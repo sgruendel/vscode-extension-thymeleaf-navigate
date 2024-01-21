@@ -102,9 +102,9 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
                 try {
                     for (const match of matches) {
                         if (match.index !== undefined) {
-                            // match[2] is undefined e.g. "~{::fragmentname}" => normalize templatename to "this"
+                            // match[2] is undefined e.g. "~{::fragmentname}" or 'this' => normalize templatename to 'this'
                             // match[2] is defined e.g. "~{dir/templatename::fragmentname}" => normalize templatename to templatename.ext
-                            const templateName = match[2] ? match[2] + parsedPath.ext : 'this';
+                            const templateName = match[2] && match[2] !== 'this' ? match[2] + parsedPath.ext : 'this';
                             const fragmentName = match[3];
                             console.log(
                                 parsedPath.base +
