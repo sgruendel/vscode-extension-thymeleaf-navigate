@@ -30,6 +30,10 @@ Dynamic fragment selectors like `<div th:insert="~{footer :: #{footer.admin}}" /
 
 ## Release Notes
 
+### 1.3.1
+
+Recognize expressions without selector [#5](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues/5)
+
 ### 1.3.0
 
 Recognize multi-line Fragment Selectors [#1](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues/1)
