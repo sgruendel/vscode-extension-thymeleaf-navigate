@@ -47,14 +47,15 @@ suite('Extension Test Suite', () => {
         const thLinks = thFragmentLinkProvider.provideDocumentLinks(doc, cancellationToken);
         console.log('thLinks:', thLinks);
         assert.ok(thLinks);
-        assert.equal(thLinks.length, 14);
+        assert.equal(thLinks.length, 12);
 
         // ==============================
-        // <div th:replace="~{fragments/file}">
+        // <div th:replace="~{:: local}">
         // ==============================
-        assert.equal(getFileName(thLinks[0].target?.fsPath), 'fragments/file.html');
-        assert.equal(thLinks[0].tooltip, 'fragments/file.html');
-        // file links are resolved directly
+        assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html');
+        assert.equal(thLinks[0].target?.fragment, '6');
+        assert.equal(thLinks[0].tooltip, 'Thymeleaf Fragment "local" [file1.html]');
+        // local links are resolved directly
         assert.ok(thLinks[0] instanceof vscode.DocumentLink);
         assert.equal(
             thFragmentLinkProvider.resolveDocumentLink(thLinks[0] as vscode.DocumentLink, cancellationToken),
@@ -62,11 +63,12 @@ suite('Extension Test Suite', () => {
         );
 
         // ==============================
-        // <div th:insert="~{fragments/file}">
+        // <div th:insert="~{:: local}">
         // ==============================
-        assert.equal(getFileName(thLinks[1].target?.fsPath), 'fragments/file.html');
-        assert.equal(thLinks[1].tooltip, 'fragments/file.html');
-        // file links are resolved directly
+        assert.equal(getFileName(thLinks[1].target?.fsPath), 'file1.html');
+        assert.equal(thLinks[1].target?.fragment, '6');
+        assert.equal(thLinks[1].tooltip, 'Thymeleaf Fragment "local" [file1.html]');
+        // local links are resolved directly
         assert.ok(thLinks[1] instanceof vscode.DocumentLink);
         assert.equal(
             thFragmentLinkProvider.resolveDocumentLink(thLinks[1] as vscode.DocumentLink, cancellationToken),
@@ -74,7 +76,7 @@ suite('Extension Test Suite', () => {
         );
 
         // ==============================
-        // <div th:replace="~{:: local}">
+        // <div th:replace="~{this :: local}">
         // ==============================
         assert.equal(getFileName(thLinks[2].target?.fsPath), 'file1.html');
         assert.equal(thLinks[2].target?.fragment, '6');
@@ -87,7 +89,7 @@ suite('Extension Test Suite', () => {
         );
 
         // ==============================
-        // <div th:insert="~{:: local}">
+        // <div th:insert="~{this :: local}">
         // ==============================
         assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html');
         assert.equal(thLinks[3].target?.fragment, '6');
@@ -100,33 +102,27 @@ suite('Extension Test Suite', () => {
         );
 
         // ==============================
-        // <div th:replace="~{this :: local}">
+        // <div th:replace="~{fragments/file :: extern1}">
         // ==============================
-        assert.equal(getFileName(thLinks[4].target?.fsPath), 'file1.html');
-        assert.equal(thLinks[4].target?.fragment, '6');
-        assert.equal(thLinks[4].tooltip, 'Thymeleaf Fragment "local" [file1.html]');
-        // local links are resolved directly
+        assert.equal(getFileName(thLinks[4].target?.fsPath), 'fragments/file.html');
+        assert.equal(thLinks[4].tooltip, 'fragments/file.html');
+        // file links are resolved directly
         assert.ok(thLinks[4] instanceof vscode.DocumentLink);
         assert.equal(
             thFragmentLinkProvider.resolveDocumentLink(thLinks[4] as vscode.DocumentLink, cancellationToken),
             thLinks[4],
         );
 
-        // ==============================
-        // <div th:insert="~{this :: local}">
-        // ==============================
-        assert.equal(getFileName(thLinks[5].target?.fsPath), 'file1.html');
-        assert.equal(thLinks[5].target?.fragment, '6');
-        assert.equal(thLinks[5].tooltip, 'Thymeleaf Fragment "local" [file1.html]');
-        // local links are resolved directly
-        assert.ok(thLinks[5] instanceof vscode.DocumentLink);
-        assert.equal(
-            thFragmentLinkProvider.resolveDocumentLink(thLinks[5] as vscode.DocumentLink, cancellationToken),
-            thLinks[5],
-        );
+        assert.ok(thLinks[5] instanceof ThymeleafDocumentLink);
+        let thLink = thLinks[5] as ThymeleafDocumentLink;
+        assert.equal(getFileName(thLink.templatePath), 'fragments/file.html');
+        assert.equal(thLink.fragmentName, 'extern1');
+        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern1" [file.html]');
+        // external links are resolved later
+        assert.ok(thFragmentLinkProvider.resolveDocumentLink(thLink, cancellationToken) instanceof vscode.DocumentLink);
 
         // ==============================
-        // <div th:replace="~{fragments/file :: extern1}">
+        // <div th:insert="~{fragments/file :: extern2}">
         // ==============================
         assert.equal(getFileName(thLinks[6].target?.fsPath), 'fragments/file.html');
         assert.equal(thLinks[6].tooltip, 'fragments/file.html');
@@ -138,15 +134,15 @@ suite('Extension Test Suite', () => {
         );
 
         assert.ok(thLinks[7] instanceof ThymeleafDocumentLink);
-        let thLink = thLinks[7] as ThymeleafDocumentLink;
+        thLink = thLinks[7] as ThymeleafDocumentLink;
         assert.equal(getFileName(thLink.templatePath), 'fragments/file.html');
-        assert.equal(thLink.fragmentName, 'extern1');
-        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern1" [file.html]');
+        assert.equal(thLink.fragmentName, 'extern2');
+        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern2" [file.html]');
         // external links are resolved later
         assert.ok(thFragmentLinkProvider.resolveDocumentLink(thLink, cancellationToken) instanceof vscode.DocumentLink);
 
         // ==============================
-        // <div th:insert="~{fragments/file :: extern2}">
+        // th:replace="~{fragments/file :: extern1(
         // ==============================
         assert.equal(getFileName(thLinks[8].target?.fsPath), 'fragments/file.html');
         assert.equal(thLinks[8].tooltip, 'fragments/file.html');
@@ -160,13 +156,13 @@ suite('Extension Test Suite', () => {
         assert.ok(thLinks[9] instanceof ThymeleafDocumentLink);
         thLink = thLinks[9] as ThymeleafDocumentLink;
         assert.equal(getFileName(thLink.templatePath), 'fragments/file.html');
-        assert.equal(thLink.fragmentName, 'extern2');
-        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern2" [file.html]');
+        assert.equal(thLink.fragmentName, 'extern1');
+        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern1" [file.html]');
         // external links are resolved later
         assert.ok(thFragmentLinkProvider.resolveDocumentLink(thLink, cancellationToken) instanceof vscode.DocumentLink);
 
         // ==============================
-        // th:replace="~{fragments/file :: extern1(
+        // th:insert="~{fragments/file :: extern2(
         // ==============================
         assert.equal(getFileName(thLinks[10].target?.fsPath), 'fragments/file.html');
         assert.equal(thLinks[10].tooltip, 'fragments/file.html');
@@ -179,26 +175,6 @@ suite('Extension Test Suite', () => {
 
         assert.ok(thLinks[11] instanceof ThymeleafDocumentLink);
         thLink = thLinks[11] as ThymeleafDocumentLink;
-        assert.equal(getFileName(thLink.templatePath), 'fragments/file.html');
-        assert.equal(thLink.fragmentName, 'extern1');
-        assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern1" [file.html]');
-        // external links are resolved later
-        assert.ok(thFragmentLinkProvider.resolveDocumentLink(thLink, cancellationToken) instanceof vscode.DocumentLink);
-
-        // ==============================
-        // th:insert="~{fragments/file :: extern2(
-        // ==============================
-        assert.equal(getFileName(thLinks[12].target?.fsPath), 'fragments/file.html');
-        assert.equal(thLinks[12].tooltip, 'fragments/file.html');
-        // file links are resolved directly
-        assert.ok(thLinks[12] instanceof vscode.DocumentLink);
-        assert.equal(
-            thFragmentLinkProvider.resolveDocumentLink(thLinks[12] as vscode.DocumentLink, cancellationToken),
-            thLinks[12],
-        );
-
-        assert.ok(thLinks[13] instanceof ThymeleafDocumentLink);
-        thLink = thLinks[13] as ThymeleafDocumentLink;
         assert.equal(getFileName(thLink.templatePath), 'fragments/file.html');
         assert.equal(thLink.fragmentName, 'extern2');
         assert.equal(thLink.tooltip, 'Thymeleaf Fragment "extern2" [file.html]');
