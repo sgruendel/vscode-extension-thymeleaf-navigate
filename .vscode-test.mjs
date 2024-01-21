@@ -2,8 +2,8 @@ import { defineConfig } from '@vscode/test-cli';
 
 export default defineConfig([
     {
-        label: 'unitTests',
-        files: 'out/test/**/*.test.js',
+        label: 'HTML Unit Tests',
+        files: 'out/test/**/*.test-html.js',
         version: 'insiders',
         workspaceFolder: 'src/test/workspace-html',
         mocha: {
