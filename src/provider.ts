@@ -19,7 +19,7 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
     static thymeleafFragmentRegex: RegExp = /th:fragment *= *" *([\w-]+) *(\(.*\))? *"/g;
 
     // RegExp defining a Thymeleaf link e.g. <div th:replace="~{fragments/skeletons :: card-skeleton}" />
-    static thymeleafLinkRegex: RegExp = /th:(replace|insert) *= *" *~{ *([\w-/]+)? *:: *([\w-]+)/g;
+    static thymeleafLinkRegex: RegExp = /th:(replace|insert) *= *" *~{ *([\w-/]+)? *(:: *([\w-]+)|} *")/g;
 
     // Map of links to all Thymeleaf fragments in a document, key is documents fs path
     private _thLinks = new Map<string, vscode.DocumentLink[]>();
@@ -105,7 +105,8 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
                             // match[2] is undefined e.g. "~{::fragmentname}" or 'this' => normalize templatename to 'this'
                             // match[2] is defined e.g. "~{dir/templatename::fragmentname}" => normalize templatename to templatename.ext
                             const templateName = match[2] && match[2] !== 'this' ? match[2] + parsedPath.ext : 'this';
-                            const fragmentName = match[3];
+                            // match[4] is undefined e.g. "~{dir/templatename}" => no fragmentName
+                            const fragmentName = match[4];
                             console.log(
                                 parsedPath.base +
                                     ':' +
@@ -116,18 +117,21 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
                                     templateName,
                             );
 
-                            const fragmentNameIndex = getFragmentNameIndex(match, fragmentName);
-                            const fragmentNameRange = new vscode.Range(
-                                i,
-                                fragmentNameIndex,
-                                i,
-                                fragmentNameIndex + fragmentName.length,
-                            );
+                            let fragmentNameIndex, fragmentNameRange;
+                            if (fragmentName) {
+                                fragmentNameIndex = getFragmentNameIndex(match, fragmentName);
+                                fragmentNameRange = new vscode.Range(
+                                    i,
+                                    fragmentNameIndex,
+                                    i,
+                                    fragmentNameIndex + fragmentName.length,
+                                );
+                            }
 
                             if (templateName === 'this') {
                                 // referencing current file, this should exist
                                 const thUri = this._thUris.get(document.uri.fsPath + '::' + fragmentName);
-                                if (thUri) {
+                                if (thUri && fragmentNameRange) {
                                     const link = new vscode.DocumentLink(fragmentNameRange, thUri);
                                     link.tooltip = getThFragmentTooltip(fragmentName, parsedPath.base);
                                     links.push(link);
@@ -157,16 +161,18 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
                                 link.tooltip = templateName;
                                 links.push(link);
 
-                                // then create a link to the the fragment within the file
-                                const thUri = this._thUris.get(templatePath + '::' + fragmentName);
-                                if (thUri) {
-                                    link = new vscode.DocumentLink(fragmentNameRange, thUri);
-                                } else {
-                                    // we have not parsed that file yet, create link that will be resolved in resolveDocumentLink()
-                                    link = new ThymeleafDocumentLink(fragmentNameRange, templatePath, fragmentName);
+                                // then create a link to the the fragment within the file, if selector exists
+                                if (fragmentNameRange) {
+                                    const thUri = this._thUris.get(templatePath + '::' + fragmentName);
+                                    if (thUri) {
+                                        link = new vscode.DocumentLink(fragmentNameRange, thUri);
+                                    } else {
+                                        // we have not parsed that file yet, create link that will be resolved in resolveDocumentLink()
+                                        link = new ThymeleafDocumentLink(fragmentNameRange, templatePath, fragmentName);
+                                    }
+                                    link.tooltip = getThFragmentTooltip(fragmentName, path.parse(templateName).base);
+                                    links.push(link);
                                 }
-                                link.tooltip = getThFragmentTooltip(fragmentName, path.parse(templateName).base);
-                                links.push(link);
                             }
                         }
                     }
