@@ -33,11 +33,13 @@ Dynamic fragment selectors like `<div th:insert="~{footer :: #{footer.admin}}" /
 ### 1.3.0
 
 Recognize multi-line Fragment Selectors [#1](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues/1)
+
 Fix referencing current template via 'this::' [#4](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues/4)
 
 ### 1.2.0
 
 Add tooltips to links.
+
 Separate links to file defining fragment and fragment itself.
 
 ### 1.1.0
