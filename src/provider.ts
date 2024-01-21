@@ -18,7 +18,7 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
     static thymeleafFragmentRegex: RegExp = /th:fragment *= *" *([\w-]+) *(\(.*\))? *"/g;
 
     // RegExp defining a Thymeleaf link e.g. <div th:replace="~{fragments/skeletons :: card-skeleton}" />
-    static thymeleafLinkRegex: RegExp = /th:(replace|insert) *= *" *~{ *([\w-/]+)? *:: *([\w-]+)"/g;
+    static thymeleafLinkRegex: RegExp = /th:(replace|insert) *= *" *~{ *([\w-/]+)? *:: *([\w-]+)/g;
 
     // Map of links to all Thymeleaf fragments in a document, key is documents fs path
     private _thLinks = new Map<string, vscode.DocumentLink[]>();
