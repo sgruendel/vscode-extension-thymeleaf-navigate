@@ -65,13 +65,13 @@ suite('Extension Test Suite', () => {
             assert.equal(getFileName(thLinks[4].target?.fsPath), 'fragments/file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
-            assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
+            assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
             assert.equal((thLinks[5] as ThymeleafDocumentLink).fragmentName, 'extern1');
 
             assert.equal(getFileName(thLinks[6].target?.fsPath), 'fragments/file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
-            assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
+            assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
             assert.equal((thLinks[7] as ThymeleafDocumentLink).fragmentName, 'extern2');
         }
 
