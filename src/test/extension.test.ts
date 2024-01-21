@@ -32,19 +32,21 @@ suite('Extension Test Suite', () => {
         );
     });
 
-    test('provider provideDocumentLinks()', async () => {
+    test('provider HTML provideDocumentLinks()', async () => {
         const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
         const cancellationToken = new MockCancellationToken();
 
         let files = await vscode.workspace.findFiles('**/file1.html');
         assert.equal(files.length, 1);
         console.log('file.fsPath:' + files[0].fsPath);
-        let doc = await vscode.workspace.openTextDocument(files[0]);
-        console.log('languageId:' + doc.languageId);
+
+        const doc = await vscode.workspace.openTextDocument(files[0]);
+        assert.equal(doc.languageId, 'html');
+
         const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, cancellationToken);
         console.log('thLinks:', thLinks);
-
         assert.equal(thLinks?.length, 8);
+
         if (thLinks) {
             assert.notEqual(thLinks, undefined);
 
@@ -60,13 +62,13 @@ suite('Extension Test Suite', () => {
             assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html');
             assert.equal(thLinks[3].target?.fragment, '6');
 
-            assert.equal(getFileName(thLinks[4].target?.fsPath), 'file.html');
+            assert.equal(getFileName(thLinks[4].target?.fsPath), 'fragments/file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
             assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
             assert.equal((thLinks[5] as ThymeleafDocumentLink).fragmentName, 'extern1');
 
-            assert.equal(getFileName(thLinks[6].target?.fsPath), 'file.html');
+            assert.equal(getFileName(thLinks[6].target?.fsPath), 'fragments/file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
             assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
