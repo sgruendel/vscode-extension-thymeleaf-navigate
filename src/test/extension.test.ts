@@ -60,13 +60,13 @@ suite('Extension Test Suite', () => {
             assert.equal(getFileName(thLinks[4].target?.fsPath), 'file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
-            assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'file.html');
+            assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
             assert.equal((thLinks[5] as ThymeleafDocumentLink).fragmentName, 'extern1');
 
             assert.equal(getFileName(thLinks[6].target?.fsPath), 'file.html');
             // assert.equal(thLinks[4].target?.fragment, undefined);
 
-            assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'file.html');
+            assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'fragment/file.html');
             assert.equal((thLinks[7] as ThymeleafDocumentLink).fragmentName, 'extern2');
         }
 
@@ -78,6 +78,6 @@ function getFileName(fsPath: string | undefined): string | undefined {
     if (!fsPath) {
         return fsPath;
     }
-    const slash = fsPath.lastIndexOf('/');
-    return fsPath.substring(slash + 1);
+    const slash = fsPath.lastIndexOf('/src/main/resources/templates/');
+    return fsPath.substring(slash + 31);
 }
