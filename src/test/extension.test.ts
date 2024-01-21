@@ -33,16 +33,16 @@ suite('Extension Test Suite', () => {
     });
 
     test('provider HTML provideDocumentLinks() / resolveDocumentLink()', async () => {
-        const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
-        assert.ok(thFragmentLinkProvider);
-        const cancellationToken = new MockCancellationToken();
-
         let files = await vscode.workspace.findFiles('**/file1.html');
         assert.equal(files.length, 1);
         console.log('file.fsPath:' + files[0].fsPath);
 
         const doc = await vscode.workspace.openTextDocument(files[0]);
         assert.equal(doc.languageId, 'html');
+
+        const thFragmentLinkProvider = thExt.thFragmentLinkProvider;
+        assert.ok(thFragmentLinkProvider);
+        const cancellationToken = new MockCancellationToken();
 
         const thLinks = thFragmentLinkProvider.provideDocumentLinks(doc, cancellationToken);
         console.log('thLinks:', thLinks);
