@@ -3,6 +3,7 @@ import { ThymeleafFragmentLinkProvider } from './provider';
 
 const TH_NAVIGATE = 'thymeleaf-navigate';
 
+// export for testing
 export let thFragmentLinkProvider: ThymeleafFragmentLinkProvider | null = null;
 let thFragmentLinkProviderSubscription: vscode.Disposable | null = null;
 
