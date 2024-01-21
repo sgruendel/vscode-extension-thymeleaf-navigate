@@ -83,7 +83,7 @@ suite('Extension Test Suite', () => {
             assert.equal(getFileName(thLinks[11].target?.fsPath), 'fragments/file.html');
             assert.equal(getFileName((thLinks[12] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
             assert.equal((thLinks[12] as ThymeleafDocumentLink).fragmentName, 'extern2');
-		}
+        }
 
         console.log('thflp', thFragmentLinkProvider);
     });
