@@ -45,11 +45,9 @@ suite('Extension Test Suite', () => {
 
         const thLinks = thFragmentLinkProvider?.provideDocumentLinks(doc, cancellationToken);
         console.log('thLinks:', thLinks);
-        assert.equal(thLinks?.length, 8);
+        assert.equal(thLinks?.length, 10);
 
         if (thLinks) {
-            assert.notEqual(thLinks, undefined);
-
             assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html');
             assert.equal(thLinks[0].target?.fragment, '6');
 
