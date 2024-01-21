@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <!-- fragment definition -->
+        <div th:fragment="local"></div>
+
+        <!-- th:replace/insert using nothing -->
+        <div th:replace="~{:: local}"></div>
+        <div th:insert="~{:: local}"></div>
+
+        <!-- th:replace/insert using this -->
+        <div th:replace="~{this :: local}"></div>
+        <div th:insert="~{this :: local}"></div>
+
+        <!-- th:replace/insert on one line -->
+        <div th:replace="~{fragments/file :: extern1}"></div>
+        <div th:insert="~{fragments/file :: extern2}"></div>
+
+        <!-- th:replace/insert multi line -->
+        <li
+            th:replace="~{fragments/file :: extern1(
+            heading = 'Lorem Ipsum',
+            text = ${descriptionText}
+        )}"
+        ></li>
+        <li
+            th:insert="~{fragments/file :: extern2(
+            heading = 'Lorem Ipsum',
+            text = ${descriptionText}
+        )}"
+        ></li>
+    </body>
+</html>

@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
-import ThymeleafFragmentLinkProvider from './provider';
+import { ThymeleafFragmentLinkProvider } from './provider';
 
 const TH_NAVIGATE = 'thymeleaf-navigate';
 
-let thFragmentLinkProvider: ThymeleafFragmentLinkProvider | null = null;
+// export for testing
+export let thFragmentLinkProvider: ThymeleafFragmentLinkProvider | null = null;
 let thFragmentLinkProviderSubscription: vscode.Disposable | null = null;
 
 export function getThymeleafLanguage(): string {
