@@ -79,5 +79,5 @@ function getFileName(fsPath: string | undefined): string | undefined {
         return fsPath;
     }
     const slash = fsPath.lastIndexOf('/src/main/resources/templates/');
-    return fsPath.substring(slash + 31);
+    return fsPath.substring(slash + 30);
 }
