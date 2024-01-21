@@ -14,18 +14,18 @@
         <div th:insert="~{this :: local}"></div>
 
         <!-- th:replace/insert on one line -->
-        <div th:replace="~{fragments/file :: extern}"></div>
-        <div th:insert="~{fragments/file :: extern}"></div>
+        <div th:replace="~{fragments/file :: extern1}"></div>
+        <div th:insert="~{fragments/file :: extern2}"></div>
 
         <!-- th:replace/insert multi line -->
         <li
-            th:replace="~{components/outcome-bullet :: outcome(
+            th:replace="~{fragments/file :: extern1(
             heading = 'Lorem Ipsum',
             text = ${descriptionText}
         )}"
         ></li>
         <li
-            th:insert="~{components/outcome-bullet :: outcome(
+            th:insert="~{fragments/file :: extern2(
             heading = 'Lorem Ipsum',
             text = ${descriptionText}
         )}"
