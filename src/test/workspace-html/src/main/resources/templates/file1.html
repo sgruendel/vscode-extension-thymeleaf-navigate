@@ -5,6 +5,10 @@
         <!-- fragment definition -->
         <div th:fragment="local"></div>
 
+        <!-- th:replace/insert using complete template -->
+        <div th:replace="~{fragments/file}"></div>
+        <div th:insert="~{fragments/file}"></div>
+
         <!-- th:replace/insert using nothing -->
         <div th:replace="~{:: local}"></div>
         <div th:insert="~{:: local}"></div>
