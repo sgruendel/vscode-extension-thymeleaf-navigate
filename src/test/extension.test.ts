@@ -49,72 +49,40 @@ suite('Extension Test Suite', () => {
 
         if (thLinks) {
             // <div th:replace="~{:: local}">
-            assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html', 'replace ::local');
-            assert.equal(thLinks[0].target?.fragment, '6', 'replace ::local');
+            assert.equal(getFileName(thLinks[0].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[0].target?.fragment, '6');
 
             // <div th:insert="~{:: local}">
-            assert.equal(getFileName(thLinks[1].target?.fsPath), 'file1.html', 'insert ::local');
-            assert.equal(thLinks[1].target?.fragment, '6', 'insert ::local');
+            assert.equal(getFileName(thLinks[1].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[1].target?.fragment, '6');
 
             // <div th:replace="~{this :: local}">
-            assert.equal(getFileName(thLinks[2].target?.fsPath), 'file1.html', 'replace this::local');
-            assert.equal(thLinks[2].target?.fragment, '6', 'replace this::local');
+            assert.equal(getFileName(thLinks[2].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[2].target?.fragment, '6');
 
             // <div th:insert="~{this :: local}">
-            assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html', 'insert this::local');
-            assert.equal(thLinks[3].target?.fragment, '6', 'insert this::local');
+            assert.equal(getFileName(thLinks[3].target?.fsPath), 'file1.html');
+            assert.equal(thLinks[3].target?.fragment, '6');
 
             // <div th:replace="~{fragments/file :: extern1}">
-            assert.equal(
-                getFileName(thLinks[4].target?.fsPath),
-                'fragments/file.html',
-                'replace fragments/file::extern1',
-            );
-            assert.equal(
-                getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath),
-                'fragments/file.html',
-                'replace fragments/file::extern1',
-            );
-            assert.equal(
-                (thLinks[5] as ThymeleafDocumentLink).fragmentName,
-                'extern1',
-                'replace fragments/file::extern1',
-            );
+            assert.equal(getFileName(thLinks[4].target?.fsPath), 'fragments/file.html');
+            assert.equal(getFileName((thLinks[5] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
+            assert.equal((thLinks[5] as ThymeleafDocumentLink).fragmentName, 'extern1');
 
             // <div th:insert="~{fragments/file :: extern2}">
-            assert.equal(
-                getFileName(thLinks[6].target?.fsPath),
-                'fragments/file.html',
-                'insert fragments/file::extern2',
-            );
-            assert.equal(
-                getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath),
-                'fragments/file.html',
-                'insert fragments/file::extern2',
-            );
-            assert.equal(
-                (thLinks[7] as ThymeleafDocumentLink).fragmentName,
-                'extern2',
-                'insert fragments/file::extern2',
-            );
+            assert.equal(getFileName(thLinks[6].target?.fsPath), 'fragments/file.html');
+            assert.equal(getFileName((thLinks[7] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
+            assert.equal((thLinks[7] as ThymeleafDocumentLink).fragmentName, 'extern2');
 
             // th:replace="~{fragments/file :: extern1(
-            assert.equal(getFileName(thLinks[9].target?.fsPath), 'fragments/file.html', 'replace multi-line');
-            assert.equal(
-                getFileName((thLinks[10] as ThymeleafDocumentLink).templatePath),
-                'fragments/file.html',
-                'replace multi-line',
-            );
-            assert.equal((thLinks[10] as ThymeleafDocumentLink).fragmentName, 'extern1', 'replace multi-line');
+            assert.equal(getFileName(thLinks[8].target?.fsPath), 'fragments/file.html');
+            assert.equal(getFileName((thLinks[9] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
+            assert.equal((thLinks[9] as ThymeleafDocumentLink).fragmentName, 'extern1');
 
             // th:insert="~{fragments/file :: extern2(
-            assert.equal(getFileName(thLinks[11].target?.fsPath), 'fragments/file.html', 'insert multi-line');
-            assert.equal(
-                getFileName((thLinks[12] as ThymeleafDocumentLink).templatePath),
-                'fragments/file.html',
-                'insert multi-line',
-            );
-            assert.equal((thLinks[12] as ThymeleafDocumentLink).fragmentName, 'extern2', 'insert multi-line');
+            assert.equal(getFileName(thLinks[10].target?.fsPath), 'fragments/file.html');
+            assert.equal(getFileName((thLinks[11] as ThymeleafDocumentLink).templatePath), 'fragments/file.html');
+            assert.equal((thLinks[11] as ThymeleafDocumentLink).fragmentName, 'extern2');
         }
 
         console.log('thflp', thFragmentLinkProvider);
