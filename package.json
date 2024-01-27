@@ -58,10 +58,10 @@
         "@types/mocha": "^10.0.6",
         "@types/node": "20.x",
         "@types/vscode": "^1.85.0",
-        "@typescript-eslint/eslint-plugin": "^6.19.0",
-        "@typescript-eslint/parser": "^6.19.0",
+        "@typescript-eslint/eslint-plugin": "^6.19.1",
+        "@typescript-eslint/parser": "^6.19.1",
         "@vscode/test-cli": "^0.0.4",
-        "@vscode/test-electron": "^2.3.8",
+        "@vscode/test-electron": "^2.3.9",
         "eslint": "^8.56.0",
         "eslint-config-strongloop": "^2.1.0",
         "typescript": "^5.3.3"
