@@ -64,6 +64,6 @@
         "@vscode/test-electron": "^2.3.9",
         "eslint": "^8.57.0",
         "eslint-config-strongloop": "^2.1.0",
-        "typescript": "^5.4.2"
+        "typescript": "^5.4.3"
     }
 }
