@@ -56,14 +56,14 @@
     "homepage": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate#readme",
     "devDependencies": {
         "@types/mocha": "^10.0.7",
-        "@types/node": "^22.5.2",
-        "@types/vscode": "^1.92.0",
-        "@typescript-eslint/eslint-plugin": "^8.4.0",
-        "@typescript-eslint/parser": "^8.4.0",
+        "@types/node": "^22.5.4",
+        "@types/vscode": "^1.93.0",
+        "@typescript-eslint/eslint-plugin": "^8.5.0",
+        "@typescript-eslint/parser": "^8.5.0",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.4.1",
-        "eslint": "^9.9.1",
+        "eslint": "^9.10.0",
         "eslint-config-strongloop": "^2.1.0",
-        "typescript": "^5.5.4"
+        "typescript": "^5.6.2"
     }
 }
