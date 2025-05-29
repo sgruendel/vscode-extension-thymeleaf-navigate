@@ -34,5 +34,9 @@
             text = ${descriptionText}
         )}"
         ></li>
+
+        <!-- th:replace/insert CSS -->
+        <div th:replace="~{fragments/file :: #id1}"></div>
+        <div th:insert="~{fragments/file :: #id2}"></div>
     </body>
 </html>

@@ -36,7 +36,7 @@
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "pretest": "npm run compile && npm run lint",
-        "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src --ext .ts",
+        "lint": "eslint src --ext .ts",
         "test": "vscode-test"
     },
     "repository": {
@@ -55,6 +55,8 @@
     },
     "homepage": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate#readme",
     "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
+        "@eslint/js": "^9.27.0",
         "@types/mocha": "^10.0.10",
         "@types/node": "^22.15.24",
         "@types/vscode": "^1.100.0",
