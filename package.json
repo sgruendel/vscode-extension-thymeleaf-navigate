@@ -1,71 +1,71 @@
 {
-    "name": "thymeleaf-navigate",
-    "displayName": "Thymeleaf Navigation",
-    "description": "Navigate Thymeleaf 3 fragments",
-    "icon": "assets/icon/icon.png",
-    "version": "1.3.1",
-    "engines": {
-        "vscode": "^1.85.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onStartupFinished"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "configuration": {
-            "title": "Thymeleaf Navigation",
-            "properties": {
-                "thymeleaf-navigate.language": {
-                    "type": "string",
-                    "default": "html",
-                    "description": "Language mode for Thymeleaf files"
-                },
-                "thymeleaf-navigate.fragmentsPath": {
-                    "type": "string",
-                    "default": "src/main/resources/templates",
-                    "description": "Path to search for Thymeleaf fragments"
-                }
-            }
+  "name": "thymeleaf-navigate",
+  "displayName": "Thymeleaf Navigation",
+  "description": "Navigate Thymeleaf 3 fragments",
+  "icon": "assets/icon/icon.png",
+  "version": "1.3.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Thymeleaf Navigation",
+      "properties": {
+        "thymeleaf-navigate.language": {
+          "type": "string",
+          "default": "html",
+          "description": "Language mode for Thymeleaf files"
+        },
+        "thymeleaf-navigate.fragmentsPath": {
+          "type": "string",
+          "default": "src/main/resources/templates",
+          "description": "Path to search for Thymeleaf fragments"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext .ts",
-        "test": "vscode-test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate.git"
-    },
-    "keywords": [
-        "vscode",
-        "thymeleaf"
-    ],
-    "author": "Stefan Gründel",
-    "publisher": "sgruendel",
-    "license": "GPL-3.0",
-    "bugs": {
-        "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues"
-    },
-    "homepage": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate#readme",
-    "devDependencies": {
-        "@eslint/eslintrc": "^3.3.3",
-        "@eslint/js": "^10.0.1",
-        "@types/mocha": "^10.0.10",
-        "@types/node": "^24.10.13",
-        "@types/vscode": "^1.109.0",
-        "@typescript-eslint/eslint-plugin": "^8.55.0",
-        "@typescript-eslint/parser": "^8.55.0",
-        "@vscode/test-cli": "^0.0.12",
-        "@vscode/test-electron": "^2.5.2",
-        "eslint": "^10.0.0",
-        "eslint-config-strongloop": "^2.1.0",
-        "typescript": "^5.9.3"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext .ts",
+    "test": "vscode-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate.git"
+  },
+  "keywords": [
+    "vscode",
+    "thymeleaf"
+  ],
+  "author": "Stefan Gründel",
+  "publisher": "sgruendel",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/issues"
+  },
+  "homepage": "https://github.com/sgruendel/vscode-extension-thymeleaf-navigate#readme",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^10.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.13",
+    "@types/vscode": "^1.109.0",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.2",
+    "eslint-config-strongloop": "^2.1.0",
+    "typescript": "^5.9.3"
+  }
 }
