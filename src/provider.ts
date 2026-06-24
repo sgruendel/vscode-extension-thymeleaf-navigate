@@ -67,7 +67,8 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
         const thFragmentsPath = getThymeleafFragmentsPath();
         const parsedPath = path.parse(document.uri.fsPath);
         let links = [];
-        if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0]) {
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+        if (workspaceFolder) {
             // first find all th:fragments created in this document
             for (let i = 0; i < document.lineCount; i++) {
                 const line = document.lineAt(i);
@@ -142,9 +143,7 @@ export class ThymeleafFragmentLinkProvider implements vscode.DocumentLinkProvide
                             } else {
                                 // referencing other file, this could already exist or not
                                 const templatePath = path.join(
-                                    (vscode.workspace.workspaceFolders &&
-                                        vscode.workspace.workspaceFolders[0].uri.fsPath) ||
-                                        '',
+                                    workspaceFolder.uri.fsPath,
                                     thFragmentsPath,
                                     templateName,
                                 );
