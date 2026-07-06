@@ -1,7 +1,8 @@
 # Thymeleaf Navigation
 
-[![Tests](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/node.js.yml/badge.svg)](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/node.js.yml)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![CI Tests](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/node.js.yml/badge.svg)](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/node.js.yml)
+[![Version](https://vsmarketplacebadges.dev/version/sgruendel.vscode-extension-thymeleaf-navigate.svg)](https://marketplace.visualstudio.com/items?itemName=sgruendel.vscode-extension-thymeleaf-navigate)
+[![Installs](https://vsmarketplacebadges.dev/downloads-short/sgruendel.vscode-extension-thymeleaf-navigate.svg)](https://marketplace.visualstudio.com/items?itemName=sgruendel.vscode-extension-thymeleaf-navigate)
 
 A VS Code extension to navigate Thymeleaf 3 fragments in text files like HTML or XML.
 
