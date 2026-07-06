@@ -1,6 +1,6 @@
 # see https://code.visualstudio.com/api/working-with-extensions/continuous-integration#github-actions
 
-name: vscode-test CI
+name: CI Tests
 
 on:
     push:
