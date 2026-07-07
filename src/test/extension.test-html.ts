@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import { after, suite, test } from 'mocha';
+import * as path from 'path';
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -213,6 +214,16 @@ function getFileName(fsPath: string | undefined): string | undefined {
     if (!fsPath) {
         return fsPath;
     }
-    const slash = fsPath.lastIndexOf('/src/main/resources/templates/');
-    return fsPath.substring(slash + 30);
+    const normalizedPath = path.normalize(fsPath);
+    const templatesRoot = path.join('src', 'main', 'resources', 'templates') + path.sep;
+    const templatesRootIndex = normalizedPath.lastIndexOf(templatesRoot);
+
+    if (templatesRootIndex >= 0) {
+        return normalizedPath
+            .substring(templatesRootIndex + templatesRoot.length)
+            .split(path.sep)
+            .join('/');
+    }
+
+    return normalizedPath.split(path.sep).join('/');
 }
