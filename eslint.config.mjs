@@ -9,55 +9,55 @@ import { FlatCompat } from '@eslint/eslintrc';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
+    baseDirectory: __dirname,
+    recommendedConfig: js.configs.recommended,
+    allConfig: js.configs.all,
 });
 
 export default defineConfig([
-  globalIgnores(['**/out', '**/dist', '**/*.d.ts']),
-  {
-    extends: compat.extends('strongloop'),
+    globalIgnores(['**/out', '**/dist', '**/*.d.ts']),
+    {
+        extends: compat.extends('strongloop'),
 
-    plugins: {
-      '@typescript-eslint': typescriptEslint,
-    },
-
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 2022,
-      sourceType: 'module',
-    },
-
-    rules: {
-      '@typescript-eslint/naming-convention': [
-        'warn',
-        {
-          selector: 'import',
-          format: ['camelCase', 'PascalCase'],
+        plugins: {
+            '@typescript-eslint': typescriptEslint,
         },
-      ],
 
-      '@/semi': 'warn',
-      curly: 'warn',
-      eqeqeq: 'warn',
-      indent: ['warn', 4],
-
-      'max-len': [
-        'warn',
-        120,
-        4,
-        {
-          ignoreComments: true,
-          ignoreUrls: true,
-          ignoreStrings: true,
-          ignorePattern: '^\\s*var\\s.+=\\s*(require\\s*\\()|(/)',
+        languageOptions: {
+            parser: tsParser,
+            ecmaVersion: 2022,
+            sourceType: 'module',
         },
-      ],
 
-      'no-throw-literal': 'warn',
-      semi: 'off',
-      'space-before-function-paren': 0,
+        rules: {
+            '@typescript-eslint/naming-convention': [
+                'warn',
+                {
+                    selector: 'import',
+                    format: ['camelCase', 'PascalCase'],
+                },
+            ],
+
+            '@/semi': 'warn',
+            curly: 'warn',
+            eqeqeq: 'warn',
+            indent: ['warn', 4],
+
+            'max-len': [
+                'warn',
+                120,
+                4,
+                {
+                    ignoreComments: true,
+                    ignoreUrls: true,
+                    ignoreStrings: true,
+                    ignorePattern: '^\\s*var\\s.+=\\s*(require\\s*\\()|(/)',
+                },
+            ],
+
+            'no-throw-literal': 'warn',
+            semi: 'off',
+            'space-before-function-paren': 0,
+        },
     },
-  },
 ]);
