@@ -1,6 +1,7 @@
 # Thymeleaf Navigation
 
 [![CI Tests](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/ci-tests.js.yaml/badge.svg)](https://github.com/sgruendel/vscode-extension-thymeleaf-navigate/actions/workflows/ci-tests.js.yaml)
+[![Depfu](https://badges.depfu.com/badges/f0cda172f153f2eccd13fe5b2aa22122/count.svg)](https://depfu.com/github/sgruendel/vscode-extension-thymeleaf-navigate?project_id=39713)
 [![Version](https://vsmarketplacebadges.dev/version/sgruendel.thymeleaf-navigate.svg)](https://marketplace.visualstudio.com/items?itemName=sgruendel.thymeleaf-navigate)
 [![Installs](https://vsmarketplacebadges.dev/downloads-short/sgruendel.thymeleaf-navigate.svg)](https://marketplace.visualstudio.com/items?itemName=sgruendel.thymeleaf-navigate)
 
